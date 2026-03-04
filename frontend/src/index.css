@@ -1,0 +1,622 @@
+/* ==========================================================================
+   Design System Variables
+   ========================================================================== */
+:root {
+  /* Core Colors - Pipeline Studio Brand */
+  --bg-app: #131018;
+  /* Deep Space Purple */
+  --bg-canvas: #0c0910;
+  /* Ultra dark for high contrast */
+  --bg-node: rgba(28, 24, 34, 0.8);
+  /* Glassmorphism Purple */
+  --bg-node-header: rgba(19, 16, 24, 0.9);
+
+  /* Accents */
+  --accent-primary: #0985DF;
+  /* Brand Blue */
+  --accent-secondary: #430B8A;
+  /* Brand Deep Purple */
+  --accent-primary-hover: #0771bd;
+  --accent-primary-glow: rgba(9, 133, 223, 0.5);
+  --accent-success: #10b981;
+
+  /* Brand Gradients */
+  --gradient-brand: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+
+  /* Text */
+  --text-primary: #ffffff;
+  /* Crisp white */
+  --text-secondary: #a1a1aa;
+  /* Muted gray/purple */
+  --text-muted: #6b7280;
+
+  /* UI Elements */
+  --border-color: rgba(230, 221, 253, 0.15);
+  /* Light lavender border */
+  --border-color-focus: var(--accent-primary);
+  --input-bg: rgba(19, 16, 24, 0.7);
+
+  /* Typography */
+  --font-family: 'Outfit', -apple-system, sans-serif;
+
+  /* Layout */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+  --shadow-node: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  --shadow-glow: 0 0 25px var(--accent-primary-glow);
+}
+
+/* ==========================================================================
+   Reset & Global
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+/* Custom Webkit Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* ==========================================================================
+   React Flow Overrides
+   ========================================================================== */
+.react-flow__bg {
+  background-color: var(--bg-canvas) !important;
+}
+
+/* Style the dotted grid */
+.react-flow__background-pattern circle {
+  fill: #334155 !important;
+}
+
+/* Connecting edges styling */
+.react-flow__edge-path,
+.react-flow__connection-path {
+  stroke: var(--accent-primary) !important;
+  stroke-width: 3 !important;
+  filter: drop-shadow(0 0 4px var(--accent-primary-glow));
+}
+
+.react-flow__edge.animated .react-flow__edge-path {
+  stroke-dasharray: 5;
+  animation: dashdraw 0.5s linear infinite;
+}
+
+@keyframes dashdraw {
+  from {
+    stroke-dashoffset: 10;
+  }
+}
+
+.react-flow__panel.react-flow__controls {
+  background: var(--bg-node);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  fill: var(--text-primary);
+}
+
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.react-flow__controls-button svg {
+  fill: var(--text-secondary);
+}
+
+.react-flow__controls-button:hover svg {
+  fill: var(--text-primary);
+}
+
+/* ==========================================================================
+   BaseNode (Glassmorphism Cards)
+   ========================================================================== */
+.base-node {
+  min-width: 260px;
+  background: var(--bg-node);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-node);
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: visible;
+}
+
+.base-node:hover,
+.react-flow__node.selected .base-node {
+  transform: translateY(-2px);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-node), var(--shadow-glow);
+}
+
+.base-node-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--bg-node-header);
+  border-bottom: 1px solid var(--border-color);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.base-node-icon {
+  font-size: 18px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.base-node-title {
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #ffffff, #e6ddfd);
+  background-clip: text;
+  /* Fix lint */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.base-node-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Fields & Inputs */
+.base-node-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.base-node-field-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.base-node-input,
+.base-node-select,
+.base-node-textarea {
+  padding: 8px 12px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-family: var(--font-family);
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.base-node-input:focus,
+.base-node-select:focus,
+.base-node-textarea:focus {
+  border-color: var(--border-color-focus);
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.base-node-textarea {
+  resize: vertical;
+  min-height: 60px;
+  line-height: 1.4;
+}
+
+.base-node-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 14px;
+  padding-right: 32px;
+}
+
+.base-node-select option {
+  background: var(--bg-app);
+  color: var(--text-primary);
+}
+
+.base-node-description {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Handles (Connection Points) */
+.react-flow__handle.base-node-handle {
+  width: 14px;
+  height: 14px;
+  background: var(--bg-canvas);
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 0 8px var(--accent-primary-glow);
+  transition: all 0.2s ease;
+}
+
+.react-flow__handle.base-node-handle:hover {
+  background: var(--accent-primary);
+  transform: scale(1.2);
+  box-shadow: 0 0 12px var(--accent-primary-glow);
+}
+
+/* Valid connection dropping state */
+.react-flow__handle-valid {
+  background: var(--accent-success) !important;
+  border-color: var(--text-primary) !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.6) !important;
+}
+
+/* ==========================================================================
+   Toolbar Styling
+   ========================================================================== */
+.pipeline-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.pipeline-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+
+.pipeline-logo-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--accent-primary), #c084fc);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+}
+
+.toolbar-nodes-container {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.draggable-node {
+  padding: 8px 18px;
+  background: rgba(45, 37, 54, 0.6);
+  /* Purple-tinted background */
+  border: 1px solid rgba(230, 221, 253, 0.05);
+  /* Pipeline Studio light border */
+  border-radius: var(--radius-pill);
+  /* Fully rounded pill shape */
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.draggable-node:hover {
+  background: rgba(67, 11, 138, 0.4);
+  /* Brand deep purple on hover */
+  color: #fff;
+  transform: translateY(-2px) scale(1.05);
+  border-color: rgba(230, 221, 253, 0.2);
+  box-shadow: 0 4px 15px rgba(9, 133, 223, 0.2);
+  /* Soft blue glow */
+}
+
+.draggable-node:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+/* ==========================================================================
+   Submit Button FAB (Floating Action Button)
+   ========================================================================== */
+.submit-fab-container {
+  position: absolute;
+  bottom: 30px;
+  right: 40px;
+  z-index: 10;
+}
+
+.submit-btn {
+  padding: 14px 32px;
+  background: var(--gradient-brand);
+  /* Pipeline Studio blue to purple gradient */
+  color: white;
+  border: none;
+  border-radius: var(--radius-pill);
+  /* Fully rounded pill */
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 25px rgba(9, 133, 223, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 35px rgba(9, 133, 223, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  /* Intense blue glow */
+}
+
+.submit-btn:active {
+  transform: translateY(1px);
+}
+
+/* ==========================================================================
+   Text Node — Dynamic Handles & Auto-Resize
+   ========================================================================== */
+.text-node {
+  transition: width 0.2s ease;
+  position: relative;
+}
+
+.text-node-textarea {
+  resize: none !important;
+  overflow: hidden;
+  min-height: 60px;
+  transition: height 0.15s ease;
+  line-height: 1.5;
+}
+
+/* Hidden mirror for measuring text width */
+.text-node-mirror {
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  font-family: var(--font-family);
+  font-size: 13px;
+  padding: 8px 12px;
+  pointer-events: none;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Handle wrapper: positions label next to the handle */
+.text-node-handle-wrapper {
+  position: absolute;
+  left: -8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 5;
+}
+
+.text-node-handle-label {
+  position: absolute;
+  right: 22px;
+  margin-bottom: 25px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  background: rgba(9, 133, 223, 0.12);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(9, 133, 223, 0.25);
+  pointer-events: none;
+}
+
+/* Variable pills shown below the textarea */
+.text-node-variables {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.text-node-variable-pill {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  background: rgba(67, 11, 138, 0.25);
+  color: #c084fc;
+  border: 1px solid rgba(192, 132, 252, 0.2);
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.3px;
+}
+
+/* ==========================================================================
+   Results Modal / Alert
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(12, 9, 16, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: var(--bg-node);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(9, 133, 223, 0.15);
+  overflow: hidden;
+  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-node-header);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #ffffff, #e6ddfd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stat-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: rgba(45, 37, 54, 0.3);
+  border: 1px solid rgba(230, 221, 253, 0.05);
+  border-radius: var(--radius-md);
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.modal-footer {
+  padding: 16px 24px 24px;
+}
+
+.modal-btn {
+  width: 100%;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-pill);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modal-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Spinner for loading state */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
